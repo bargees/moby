@@ -30,8 +30,8 @@ RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E87
 RUN echo deb http://ppa.launchpad.net/zfs-native/stable/ubuntu trusty main > /etc/apt/sources.list.d/zfs.list
 
 # add llvm repo
-RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 6084F3CF814B57C1CF12EFD515CF4D18AF4F7421
-RUN echo deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty main > /etc/apt/sources.list.d/llvm.list
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 6084F3CF814B57C1CF12EFD515CF4D18AF4F7421
+RUN echo deb https://apt.llvm.org/trusty/ llvm-toolchain-trusty main > /etc/apt/sources.list.d/llvm.list
 
 # Packaged dependencies
 RUN apt-get update && apt-get install -y \
