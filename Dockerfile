@@ -253,7 +253,7 @@ RUN set -x \
 	&& rm -rf "$GOPATH"
 
 # Build/install the tool for embedding resources in Windows binaries
-ENV RSRC_VERSION v2
+ENV RSRC_VERSION v0.2.0
 RUN set -x \
 	&& export GOPATH="$(mktemp -d)" \
 	&& git clone --depth 1 -b "$RSRC_VERSION" https://github.com/akavel/rsrc.git "$GOPATH/src/github.com/akavel/rsrc" \
