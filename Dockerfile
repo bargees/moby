@@ -196,7 +196,11 @@ ENV DOCKER_PY_COMMIT e2878cbcc3a7eef99917adc1be252800b0e41ece
 RUN git clone https://github.com/docker/docker-py.git /docker-py \
 	&& cd /docker-py \
 	&& git checkout -q $DOCKER_PY_COMMIT \
-	&& pip install -r test-requirements.txt
+	&& pip install mock==1.0.1 \
+	&& pip install pytest>=2.7.2 \
+	&& pip install coverage==3.7.1 \
+	&& pip install pytest-cov==2.1.0 \
+	&& pip install flake8==2.4.1 \
 
 # Setup s3cmd config
 RUN { \
