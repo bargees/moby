@@ -29,6 +29,9 @@ func (s *Server) newServer(proto, addr string) ([]*HTTPServer, error) {
 		if err != nil {
 			return nil, err
 		}
+		for i := range ls {
+			ls[i] = &MalformedHostHeaderOverride{ls[i]}
+		}
 	case "tcp":
 		l, err := s.initTCPSocket(addr)
 		if err != nil {
@@ -40,7 +43,7 @@ func (s *Server) newServer(proto, addr string) ([]*HTTPServer, error) {
 		if err != nil {
 			return nil, fmt.Errorf("can't create unix socket %s: %v", addr, err)
 		}
-		ls = append(ls, l)
+		ls = append(ls, &MalformedHostHeaderOverride{l})
 	default:
 		return nil, fmt.Errorf("Invalid protocol format: %q", proto)
 	}
