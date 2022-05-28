@@ -218,7 +218,8 @@ RUN useradd --create-home --gid docker unprivilegeduser
 
 VOLUME /var/lib/docker
 WORKDIR /go/src/github.com/docker/docker
-ENV DOCKER_BUILDTAGS apparmor seccomp selinux
+ENV DOCKER_BUILDTAGS seccomp \
+	exclude_graphdriver_zfs exclude_graphdriver_aufs exclude_graphdriver_btrfs exclude_graphdriver_devicemapper exclude_graphdriver_vfs
 
 # Let us use a .bashrc file
 RUN ln -sfv $PWD/.bashrc ~/.bashrc
