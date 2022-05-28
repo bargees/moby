@@ -90,9 +90,19 @@ RUN cd /usr/local/lvm2 \
 # IMPORTANT: If the version of Go is updated, the Windows to Linux CI machines
 #            will need updating, to avoid errors. Ping #docker-maintainers on IRC
 #            with a heads-up.
-ENV GO_VERSION 1.5.3
-RUN curl -fsSL "https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz" \
-	| tar -xzC /usr/local
+ENV GO_VERSION 1.6.3
+
+RUN curl -fsSL "https://storage.googleapis.com/golang/go1.4.3.linux-amd64.tar.gz" \
+	| tar -xzC /root && \
+	mv /root/go /root/go1.4 && \
+	cd /usr/local && \
+	curl -fsSL "https://storage.googleapis.com/golang/go$GO_VERSION.src.tar.gz" \
+	| tar -xzC /usr/local && \
+	cd go && \
+	printf 'diff --git a/src/runtime/sys_darwin_amd64.s b/src/runtime/sys_darwin_amd64.s\nindex e09b906..fa8ff2f 100644\n--- a/src/runtime/sys_darwin_amd64.s\n+++ b/src/runtime/sys_darwin_amd64.s\n@@ -157,6 +157,7 @@ systime:\n\t// Fall back to system call (usually first call in this thread).\n\tMOVQ\tSP, DI\n\tMOVQ\t$0, SI\n+\tMOVQ\t$0, DX  // required as of Sierra; Issue 16570\n\tMOVL\t$(0x2000000+116), AX\n\tSYSCALL\n\tCMPQ\tAX, $0\n' | patch -p1 && \
+	cd src && \
+	./make.bash
+
 ENV PATH /go/bin:/usr/local/go/bin:$PATH
 ENV GOPATH /go:/go/src/github.com/docker/docker/vendor
 
@@ -126,10 +136,12 @@ RUN git clone https://github.com/golang/lint.git /go/src/github.com/golang/lint 
 
 # Configure the container for OSX cross compilation
 ENV OSX_SDK MacOSX10.11.sdk
+ENV OSX_CROSS_COMMIT 8aa9b71a394905e6c5f4b59e2b97b87a004658a4
 RUN set -x \
 	&& export OSXCROSS_PATH="/osxcross" \
-	&& git clone --depth 1 https://github.com/tpoechtrager/osxcross.git $OSXCROSS_PATH \
-	&& curl -sSL https://s3.dockerproject.org/darwin/${OSX_SDK}.tar.xz -o "${OSXCROSS_PATH}/tarballs/${OSX_SDK}.tar.xz" \
+	&& git clone https://github.com/tpoechtrager/osxcross.git $OSXCROSS_PATH \
+	&& ( cd $OSXCROSS_PATH && git checkout -q $OSX_CROSS_COMMIT) \
+	&& curl -sSL https://s3.dockerproject.org/darwin/v2/${OSX_SDK}.tar.xz -o "${OSXCROSS_PATH}/tarballs/${OSX_SDK}.tar.xz" \
 	&& UNATTENDED=yes OSX_VERSION_MIN=10.6 ${OSXCROSS_PATH}/build.sh
 ENV PATH /osxcross/target/bin:$PATH
 
