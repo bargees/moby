@@ -19,7 +19,7 @@ clone git github.com/microsoft/hcsshim de43b42b5ce14dfdcbeedb0628b0032174d89caa
 clone git github.com/mistifyio/go-zfs v2.1.1
 clone git github.com/tchap/go-patricia v2.1.0
 clone git github.com/vdemeester/shakers 3c10293ce22b900c27acad7b28656196fcc2f73b
-clone git golang.org/x/net 47990a1ba55743e6ef1affd3a14e5bac8553615d https://github.com/golang/net.git
+clone git golang.org/x/net 7c71ca708c71bcbd0e6c856b01468ee07fe24557 https://github.com/golang/net.git
 clone git github.com/docker/go-units 651fc226e7441360384da338d0fd37f2440ffbe3
 clone git github.com/docker/go-connections v0.1.2
 clone git github.com/docker/engine-api v0.2.3
@@ -57,13 +57,15 @@ clone git github.com/miekg/pkcs11 80f102b5cac759de406949c47f0928b99bd64cdf
 clone git github.com/docker/go v1.5.1-1-1-gbaf439e
 clone git github.com/agl/ed25519 d2b94fd789ea21d12fac1a4443dd3a3f79cda72c
 
-clone git github.com/opencontainers/runc 27dd48f6919a9bf8c25b41e97ca12f6fa73f8f77 # libcontainer
+clone git github.com/opencontainers/runc ee6a72df4e7be989e792aaaddef58d982097834e # libcontainer
 clone git github.com/seccomp/libseccomp-golang 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
 # libcontainer deps (see src/github.com/opencontainers/runc/Godeps/Godeps.json)
 clone git github.com/coreos/go-systemd v4
 clone git github.com/godbus/dbus v3
 clone git github.com/syndtr/gocapability 2c00daeb6c3b45114c80ac44119e7b8801fdd852
 clone git github.com/golang/protobuf f7137ae6b19afbfd61a94b746fda3b3fe0491874
+clone git github.com/pkg/errors v0.9.1
+clone git golang.org/x/sys 50298aa7a9faed39cd341ad7fd9275b1d5ddd70c https://github.com/golang/sys.git
 
 # gelf logging driver deps
 clone git github.com/Graylog2/go-gelf 6c62a85f1d47a67f2a5144c0e745b325889a8120

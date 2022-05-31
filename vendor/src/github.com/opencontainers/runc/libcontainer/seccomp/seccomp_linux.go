@@ -11,6 +11,8 @@ import (
 	"syscall"
 
 	"github.com/opencontainers/runc/libcontainer/configs"
+	"github.com/opencontainers/runc/libcontainer/seccomp/patchbpf"
+
 	libseccomp "github.com/seccomp/libseccomp-golang"
 )
 
@@ -72,7 +74,7 @@ func InitSeccomp(config *configs.Seccomp) error {
 		}
 	}
 
-	if err = filter.Load(); err != nil {
+	if err := patchbpf.PatchAndLoad(config, filter); err != nil {
 		return fmt.Errorf("error loading seccomp filter into kernel: %s", err)
 	}
 
